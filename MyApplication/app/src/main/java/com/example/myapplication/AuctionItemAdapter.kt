@@ -3,46 +3,41 @@ package com.example.myapplication
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AuctionItemAdapter(private val items: List<Products>) : RecyclerView.Adapter<AuctionItemAdapter.ViewHolder>() {
+class AuctionItemAdapter(private val auctionItemList: List<Products>) : RecyclerView.Adapter<AuctionItemAdapter.AuctionItemViewHolder>() {
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvProductName: TextView = view.findViewById(R.id.tv_product_name)
-        val tvCurrentBid: TextView = view.findViewById(R.id.tv_current_bid)
-        val tvTimeLeft: TextView = view.findViewById(R.id.tv_time_left)
-        val btnBid: Button = view.findViewById(R.id.btn_bid)
+    class AuctionItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val prodName: TextView = itemView.findViewById(R.id.prodName)
+        val bidPrice: TextView = itemView.findViewById(R.id.bidPrice)
+        val immediatePrice: TextView = itemView.findViewById(R.id.immediatePrice)
+        val createdAt: TextView = itemView.findViewById(R.id.createdAt)
+        val endAt: TextView = itemView.findViewById(R.id.endAt)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AuctionItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_auction, parent, false)
-        return ViewHolder(view)
+        return AuctionItemViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = items[position]
-        holder.tvProductName.text = item.prodName
-        holder.tvCurrentBid.text = "현재 입찰가: ${item.bidPrice}원"
+    override fun onBindViewHolder(holder: AuctionItemViewHolder, position: Int) {
+        val currentItem = auctionItemList[position]
+        holder.prodName.text = currentItem.prodName
+        holder.bidPrice.text = "현재 입찰 가격: ${currentItem.bidPrice}원"
+        holder.immediatePrice.text = "즉시 입찰가: ${currentItem.immediatePrice}원"
 
-        val timeLeft = calculateTimeLeft(item.endAt)
-        holder.tvTimeLeft.text = "남은 시간: $timeLeft"
+        val inputDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        val outputDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
 
-        holder.btnBid.setOnClickListener {
-            // 입찰 로직 구현
-        }
+        val createdAtDate = inputDateFormat.parse(currentItem.createdAt)
+        val endAtDate = inputDateFormat.parse(currentItem.endAt)
+
+        holder.createdAt.text = "등록 시간: ${outputDateFormat.format(createdAtDate)}"
+        holder.endAt.text = "종료 시간: ${outputDateFormat.format(endAtDate)}"
     }
 
-    override fun getItemCount() = items.size
-
-    private fun calculateTimeLeft(endDate: Date): String {
-        val now = Date()
-        val diff = endDate.time - now.time
-        val hours = diff / (60 * 60 * 1000)
-        val minutes = (diff % (60 * 60 * 1000)) / (60 * 1000)
-        return "${hours}시간 ${minutes}분"
-    }
+    override fun getItemCount() = auctionItemList.size
 }

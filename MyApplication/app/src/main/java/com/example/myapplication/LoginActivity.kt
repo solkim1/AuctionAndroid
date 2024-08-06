@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,8 +13,6 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import org.json.JSONObject
-
-
 
 class LoginActivity : AppCompatActivity() {
 
@@ -44,8 +43,13 @@ class LoginActivity : AppCompatActivity() {
 
                     if (response.toString().isNotEmpty()) {
                         // 현재 회원 정보로 로그인 성공
+                        val sharedPref = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+                        with(sharedPref.edit()) {
+                            putString("user_id", inputId) // 사용자 ID 저장
+                            apply()
+                        }
+
                         val intent = Intent(this, MainActivity::class.java)
-                        intent.putExtra("member", response.toString())
                         finishAffinity() // 액티비티 스택 비우기
                         startActivity(intent)
                     } else {
