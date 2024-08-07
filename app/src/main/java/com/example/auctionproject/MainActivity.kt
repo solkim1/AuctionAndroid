@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         navView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
-                    loadFragment(HomeFragment())
+                    loadFragment(AuctionItemsFragment())
                     true
                 }
                 R.id.navigation_bid_items -> {
