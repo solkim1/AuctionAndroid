@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/prodName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product Name"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/bidPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bid Price"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/immediatePrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Immediate Price"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/createdAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Created At"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/endAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End At"
+        android:textSize="14sp" />
+</LinearLayout>
