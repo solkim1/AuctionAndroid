@@ -43,7 +43,7 @@ class BidItemsFragment : Fragment() {
         val userId = sharedPref?.getString("user_id", "") ?: return
         val token = sharedPref?.getString("token", "") ?: return
 
-        val url = "http://192.168.137.1:8089/auction/products/userBidItems"
+        val url = "http://192.168.219.46:8089/auction/products/userBidItems"
         val params = HashMap<String, String>()
         params["userId"] = userId
         val jsonObject = JSONObject(params as Map<*, *>)
