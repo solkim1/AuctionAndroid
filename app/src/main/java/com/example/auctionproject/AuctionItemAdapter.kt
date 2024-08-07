@@ -42,7 +42,7 @@ class AuctionItemAdapter(private val context: Context, private val items: List<P
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val base64String = items[position].prodImgPath
+        val base64String = items[position].base64Img
         // Base64 문자열이 null이거나 빈 문자열인지 확인
         if (base64String.isNullOrEmpty()) {
             // 예를 들어, 기본 이미지를 설정하거나, null을 처리하는 로직을 추가합니다.

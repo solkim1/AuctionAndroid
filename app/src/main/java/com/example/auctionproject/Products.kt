@@ -13,4 +13,5 @@ data class Products(
     val endAt: Date,
     val userId: String,
     var prodImgPath: String? = null // 이 필드를 추가합니다.
+    ,var base64Img: String? = null
 )

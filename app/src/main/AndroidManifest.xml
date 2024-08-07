@@ -15,10 +15,11 @@
         <activity
             android:name=".SupportActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:exported="false" />
-        android:usesCleartextTraffic="true" >
+            android:exported="false"
+        android:usesCleartextTraffic="true" />
         <activity
             android:name=".ItemDetail"
+            android:theme="@style/AppTheme.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".UpdateProfileActivity"
