@@ -1,1 +1,13 @@
+<<<<<<< HEAD
 /build
+=======
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+>>>>>>> fd517e665dad3a56ae2dca6680421624236a792d
