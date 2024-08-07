@@ -38,7 +38,7 @@ class MyPageFragment : Fragment() {
         val sharedPreferences = activity?.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         val token = sharedPreferences?.getString("auth_token", "") ?: ""
 
-        val url = "http://192.168.219.46:8089/auction/profile"
+        val url = "http://192.168.137.1:8089/auction/profile"
 
         val request = object : JsonObjectRequest(
             Request.Method.GET, url, null,
@@ -66,7 +66,7 @@ class MyPageFragment : Fragment() {
         val sharedPreferences = activity?.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         val token = sharedPreferences?.getString("auth_token", "") ?: ""
 
-        val url = "http://192.168.219.46:8089/auction/profile/comments/count/$userId"
+        val url = "http://192.168.137.1:8089/auction/profile/comments/count/$userId"
 
         val request = object : StringRequest(
             Request.Method.GET, url,

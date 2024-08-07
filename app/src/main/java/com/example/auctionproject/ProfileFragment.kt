@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.auctionproject.R
 import com.google.gson.Gson
 
 class ProfileFragment : Fragment() {
@@ -22,7 +23,10 @@ class ProfileFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
-
+        tvUserId = view.findViewById(R.id.tv_user_id)
+        tvNickname = view.findViewById(R.id.tv_nickname)
+        tvLikes = view.findViewById(R.id.tv_likes)
+        btnEditProfile = view.findViewById(R.id.btn_edit_profile)
         return view
     }
 

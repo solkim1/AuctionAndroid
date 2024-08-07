@@ -103,7 +103,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline2">
 
         <Button
-            android:id="@+id/btnProfile"
+            android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -112,7 +112,7 @@
             app:cornerRadius="0dp" />
 
         <Button
-            android:id="@+id/btnLogOut"
+            android:id="@+id/button3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -121,7 +121,7 @@
             app:cornerRadius="0dp" />
 
         <Button
-            android:id="@+id/btnContact"
+            android:id="@+id/button4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -130,7 +130,7 @@
             app:cornerRadius="0dp" />
 
         <Button
-            android:id="@+id/btnQuit"
+            android:id="@+id/button5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -1,5 +1,7 @@
 package com.example.auctionproject
 
+import java.util.Date
+
 data class Products(
     val prodIdx: Int,
     val prodName: String,
@@ -7,7 +9,8 @@ data class Products(
     val bidPrice: Int,
     val immediatePrice: Int,
     val bidStatus: Char,
-    val createdAt: String,
-    val endAt: String,
-    val userId: String
+    val createdAt: Date,
+    val endAt: Date,
+    val userId: String,
+    var prodImgPath: String? = null // 이 필드를 추가합니다.
 )

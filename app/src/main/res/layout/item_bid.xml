@@ -1,36 +1,29 @@
-<!-- item_bid.xml -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/prod_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product Name"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/bid_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bid Price"
+        android:textSize="14sp"/>
 
     <ImageView
-        android:id="@+id/prodImage"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_foreground"/>
-
-    <TextView
-        android:id="@+id/prodName"
-        android:layout_width="match_parent"
+        android:id="@+id/prod_img"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="상품 이름"
-        android:textSize="16sp"
-        android:padding="8dp"/>
+        android:layout_marginTop="8dp"/>
 
-    <TextView
-        android:id="@+id/bidPrice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="현재 입찰 가격: 0원"
-        android:padding="8dp"/>
-
-    <TextView
-        android:id="@+id/immediatePrice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="즉시 입찰가: 0원"
-        android:padding="8dp"/>
 </LinearLayout>

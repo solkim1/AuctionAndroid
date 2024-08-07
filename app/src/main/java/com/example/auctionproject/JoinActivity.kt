@@ -10,9 +10,8 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.auctionproject.MainActivity
+
 import com.example.auctionproject.R
-import com.example.auctionproject.Users
 import com.google.gson.Gson
 
 class JoinActivity : AppCompatActivity() {
@@ -39,7 +38,7 @@ class JoinActivity : AppCompatActivity() {
             val member = Users(inputId, inputPw,inputNick,null)
             val request = object:StringRequest( // object: 익명객체
                 Request.Method.POST,
-                "http://192.168.219.46:8089/auction/users/join",
+                "http://192.168.137.1:8089/auction/users/join",
                 { response ->
                     Log.d("response", response.toString())
                     val intent = Intent(this, MainActivity::class.java)
