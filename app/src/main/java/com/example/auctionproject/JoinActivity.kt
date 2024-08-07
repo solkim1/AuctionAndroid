@@ -38,7 +38,7 @@ class JoinActivity : AppCompatActivity() {
             val member = Users(inputId, inputPw,inputNick,null)
             val request = object:StringRequest( // object: 익명객체
                 Request.Method.POST,
-                "http://192.168.137.1:8089/auction/users/join",
+                "http://192.168.219.53:8089/auction/users/join",
                 { response ->
                     Log.d("response", response.toString())
                     val intent = Intent(this, MainActivity::class.java)
