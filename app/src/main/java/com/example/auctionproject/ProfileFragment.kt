@@ -44,7 +44,7 @@ class ProfileFragment : Fragment() {
         val sharedPreferences = activity?.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
         val userId = sharedPreferences?.getString("userId", "") ?: ""
 
-        val url = "http://your-server-url/users/profile/$userId"
+        val url = "http://192.168.137.1/users/profile/$userId"
 
         val request = JsonObjectRequest(
             Request.Method.GET, url, null,

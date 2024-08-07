@@ -45,8 +45,10 @@ class BidItemsFragment : Fragment() {
         val userId = sharedPreferences?.getString("user_id", null)
         val token = sharedPreferences?.getString("auth_token", null)
 
+
         if (userId != null && token != null) {
             val payload = mapOf("userId" to userId)
+
 
             apiService.getUserBidItems("Bearer $token", payload)
                 .enqueue(object : Callback<List<BidItem>> {
