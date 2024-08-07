@@ -1,22 +1,30 @@
 package com.example.auctionproject
 
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-
-import com.example.auctionproject.R
+import com.bumptech.glide.Glide
 import java.util.*
 
-class AuctionItemAdapter(private val items: List<Products>) : RecyclerView.Adapter<AuctionItemAdapter.ViewHolder>() {
+class AuctionItemAdapter(private val context: Context, private val items: List<Products>) :
+    RecyclerView.Adapter<AuctionItemAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvProductName: TextView = view.findViewById(R.id.tv_product_name)
-        val tvCurrentBid: TextView = view.findViewById(R.id.tv_current_bid)
-        val tvTimeLeft: TextView = view.findViewById(R.id.tv_time_left)
-        val btnBid: Button = view.findViewById(R.id.btn_bid)
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val prodImg: ImageView = itemView.findViewById(R.id.prodImg)
+        val prodName: TextView = itemView.findViewById(R.id.prodName)
+        val curBidprice: TextView = itemView.findViewById(R.id.curBidPrice)
+        val immediatePrice: TextView = itemView.findViewById(R.id.buyPrice)
+        val timeLeft: TextView = itemView.findViewById(R.id.timeLeft)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,26 +32,40 @@ class AuctionItemAdapter(private val items: List<Products>) : RecyclerView.Adapt
         return ViewHolder(view)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = items[position]
-        holder.tvProductName.text = item.prodName
-        holder.tvCurrentBid.text = "현재 입찰가: ${item.bidPrice}원"
+        val product = items[position]
 
-        val timeLeft = calculateTimeLeft(item.endAt)
-        holder.tvTimeLeft.text = "남은 시간: $timeLeft"
+        // Glide를 사용하여 이미지 로드
+        Glide.with(context)
+            .load(product.prodImgPath)
+            .placeholder(R.drawable.placeholder) // 로딩 중 표시할 이미지
+            .error(R.drawable.error) // 로드 실패 시 표시할 이미지
+            .into(holder.prodImg)
 
-        holder.btnBid.setOnClickListener {
-            // 입찰 로직 구현
+        holder.prodName.text = product.prodName
+        holder.curBidprice.text = "${product.bidPrice}원"
+        holder.immediatePrice.text = "${product.immediatePrice}원"
+        holder.timeLeft.text = calculateTimeLeft(product.endAt)
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, ItemDetail::class.java)
+            intent.putExtra("prodIdx", product.prodIdx)
+            context.startActivity(intent)
         }
     }
 
     override fun getItemCount() = items.size
 
-    private fun calculateTimeLeft(endDate: Date): String {
-        val now = Date()
-        val diff = endDate.time - now.time
-        val hours = diff / (60 * 60 * 1000)
-        val minutes = (diff % (60 * 60 * 1000)) / (60 * 1000)
-        return "${hours}시간 ${minutes}분"
+    private fun calculateTimeLeft(endDate: Date?): String {
+        if (endDate != null) {
+            val now = Date()
+            val diff = endDate.time - now.time
+            val hours = diff / (60 * 60 * 1000)
+            val minutes = (diff % (60 * 60 * 1000)) / (60 * 1000)
+            return "${hours}시간 ${minutes}분"
+        } else {
+            return "마감"
+        }
     }
 }

@@ -24,7 +24,7 @@ class MyPageFragment : Fragment() {
     private lateinit var btnQuit: Button
     private lateinit var btnLogOut: Button
     private lateinit var btnUpdProf: Button
-    private lateinit var btnSupport:Button
+    private lateinit var btnSupport: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_my_page, container, false)
@@ -63,14 +63,14 @@ class MyPageFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        fetchUserProfile()
+        fetchUserProfile() // 다시 사용자 정보를 불러옴
     }
 
     private fun fetchUserProfile() {
         val sharedPreferences = activity?.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         val token = sharedPreferences?.getString("auth_token", "") ?: ""
 
-        val url = "http://192.168.137.1:8089/auction/profile"
+        val url = "http://192.168.0.23:8089/auction/profile"
 
         val request = object : JsonObjectRequest(
             Request.Method.GET, url, null,
@@ -99,7 +99,7 @@ class MyPageFragment : Fragment() {
         val sharedPreferences = activity?.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         val token = sharedPreferences?.getString("auth_token", "") ?: ""
 
-        val url = "http://192.168.137.1:8089/auction/profile/comments/count/$userId"
+        val url = "http://192.168.0.23:8089/auction/profile/comments/count/$userId"
 
         val request = object : StringRequest(
             Request.Method.GET, url,
@@ -137,7 +137,7 @@ class MyPageFragment : Fragment() {
         val token = sharedPreferences?.getString("auth_token", "") ?: ""
         val userId = sharedPreferences?.getString("user_id", "") ?: ""
 
-        val url = "http://192.168.137.1:8089/auction/users/$userId"
+        val url = "http://192.168.0.23:8089/auction/users/$userId"
 
         val request = object : StringRequest(
             Request.Method.DELETE, url,

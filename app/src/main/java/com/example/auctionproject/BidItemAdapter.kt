@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import java.text.NumberFormat
 import java.util.Locale
 
-class BidItemAdapter(private val bidItems: List<BidItem>) : RecyclerView.Adapter<BidItemAdapter.BidItemViewHolder>() {
+class BidItemAdapter(private val bidItems: ArrayList<BidItem>) : RecyclerView.Adapter<BidItemAdapter.BidItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BidItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_bid, parent, false)
@@ -46,7 +46,7 @@ class BidItemAdapter(private val bidItems: List<BidItem>) : RecyclerView.Adapter
                 if (it.startsWith("http://") || it.startsWith("https://")) {
                     it
                 } else {
-                    "http://192.168.137.1:8089/auction/images/$it"
+                    "http://192.168.0.23:8089/auction/images/$it"
                 }
             }
 
