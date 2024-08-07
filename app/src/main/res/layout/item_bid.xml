@@ -5,25 +5,34 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <ImageView
+        android:id="@+id/item_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/item_image_desc" />
+
     <TextView
-        android:id="@+id/prod_name"
+        android:id="@+id/item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Product Name"
-        android:textSize="16sp"
-        android:textStyle="bold"/>
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp"
+        android:text="Item Name" />
 
     <TextView
         android:id="@+id/bid_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bid Price"
-        android:textSize="14sp"/>
+        android:textSize="16sp"
+        android:text="Bid Price" />
 
-    <ImageView
-        android:id="@+id/prod_img"
+    <TextView
+        android:id="@+id/seller_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"/>
-
+        android:textSize="14sp"
+        android:text="Seller: Nickname" />
 </LinearLayout>

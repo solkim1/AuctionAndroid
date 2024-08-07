@@ -2,24 +2,24 @@ package com.example.auctionproject
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.Request
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
-import org.json.JSONArray
-import org.json.JSONObject
-import java.util.Date
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class BidItemsFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: BidItemAdapter
-    private lateinit var bidItems: MutableList<Products>
+    private lateinit var bidItemAdapter: BidItemAdapter
+    private lateinit var apiService: ApiService
+    private var authToken: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,63 +27,56 @@ class BidItemsFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_bid_items, container, false)
         recyclerView = view.findViewById(R.id.recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = GridLayoutManager(context, 2)
 
-        bidItems = mutableListOf()
-        adapter = BidItemAdapter(bidItems)
-        recyclerView.adapter = adapter
+        val retrofit = (activity as MainActivity).createRetrofit()
+        apiService = retrofit.create(ApiService::class.java)
 
-        loadBidItems()
+        val sharedPref = activity?.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        authToken = sharedPref?.getString("auth_token", null)
+
+        fetchBidItems()
 
         return view
     }
 
-    private fun loadBidItems() {
-        val sharedPref = activity?.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
-        val userId = sharedPref?.getString("user_id", "") ?: return
-        val token = sharedPref?.getString("token", "") ?: return
+    private fun fetchBidItems() {
+        val sharedPreferences = activity?.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        val userId = sharedPreferences?.getString("user_id", null)
+        val token = sharedPreferences?.getString("auth_token", null)
 
-        val url = "http://192.168.137.1:8089/auction/products/userBidItems"
-        val params = HashMap<String, String>()
-        params["userId"] = userId
-        val jsonObject = JSONObject(params as Map<*, *>)
+        if (userId != null && token != null) {
+            val payload = mapOf("userId" to userId)
 
-        val request = object : JsonObjectRequest(Request.Method.POST, url, jsonObject,
-            { response ->
-                parseJsonResponse(response.getJSONArray("data"))
-            },
-            { error ->
-                error.printStackTrace()
-            }
-        ) {
-            override fun getHeaders(): MutableMap<String, String> {
-                val headers = HashMap<String, String>()
-                headers["Authorization"] = "Bearer $token"
-                return headers
-            }
+            apiService.getUserBidItems("Bearer $token", payload)
+                .enqueue(object : Callback<List<BidItem>> {
+                    override fun onResponse(
+                        call: Call<List<BidItem>>,
+                        response: Response<List<BidItem>>
+                    ) {
+                        if (response.isSuccessful) {
+                            val bidItems = response.body()
+                            if (bidItems != null) {
+                                bidItemAdapter = BidItemAdapter(bidItems)
+                                recyclerView.adapter = bidItemAdapter
+                            } else {
+                                Log.e("BidItemsFragment", "Empty response body")
+                                Toast.makeText(context, "No bid items found", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            Log.e("BidItemsFragment", "Failed to fetch bid items")
+                            Toast.makeText(context, "Failed to fetch bid items", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<List<BidItem>>, t: Throwable) {
+                        Log.e("BidItemsFragment", "Network request failed", t)
+                        Toast.makeText(context, "Network request failed", Toast.LENGTH_SHORT).show()
+                    }
+                })
+        } else {
+            Log.e("BidItemsFragment", "User ID or token is missing")
+            Toast.makeText(context, "User ID or token is missing", Toast.LENGTH_SHORT).show()
         }
-
-        Volley.newRequestQueue(context).add(request)
-    }
-
-    private fun parseJsonResponse(response: JSONArray) {
-        for (i in 0 until response.length()) {
-            val item = response.getJSONObject(i)
-            val bidItem = Products(
-                item.getInt("prodIdx"),
-                item.getString("prodName"),
-                item.getString("prodInfo"),
-                item.getInt("bidPrice"),
-                item.getInt("immediatePrice"),
-                item.getString("bidStatus")[0],
-                Date(item.getLong("createdAt")),
-                Date(item.getLong("endAt")),
-                item.getString("userId")
-            ).apply {
-                prodImgPath = item.getString("prodImgPath")
-            }
-            bidItems.add(bidItem)
-        }
-        adapter.notifyDataSetChanged()
     }
 }

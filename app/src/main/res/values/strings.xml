@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">SOL MARKET</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="bid_price_format">입찰 가격: %s원</string>
+    <string name="seller_nickname_format">판매자: %s</string>
+    <string name="item_image_desc">%1$s 이미지</string>
+    <string name="bid_items_header">입찰 내역</string>
+
+
 </resources>
