@@ -24,7 +24,7 @@ class ItemDetail : AppCompatActivity() {
     private fun getProdDetail() {
         val request = StringRequest(
             Request.Method.POST,
-            "http://192.168.219.53:8089/auction/prodDetail",
+            "http://192.168.219.46:8089/auction/prodDetail",
             { response ->
                 Log.d("response",response)
             },

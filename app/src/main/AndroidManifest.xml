@@ -16,7 +16,7 @@
             android:name=".SupportActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:exported="false"
-            android:usesCleartextTraffic="true" >
+            android:usesCleartextTraffic="true" />
         <activity
             android:name=".UpdateProfileActivity"
             android:theme="@style/AppTheme.NoActionBar"
