@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -27,17 +26,15 @@ class AuctionItemsFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: AuctionItemAdapter
     private lateinit var queue: RequestQueue
-    lateinit var prodList: ArrayList<Products>
+    private var prodList: ArrayList<Products> = ArrayList()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_auction_items, container, false)
 
         recyclerView = view.findViewById(R.id.recycler_view)
-        prodList = ArrayList()
         queue = Volley.newRequestQueue(view.context)
         adapter = AuctionItemAdapter(view.context, prodList)
 
@@ -47,20 +44,19 @@ class AuctionItemsFragment : Fragment() {
 
         val btnRegist = view.findViewById<Button>(R.id.btnRegist)
 
-        
         // 상품 등록 버튼 클릭했을 때
         btnRegist.setOnClickListener {
-//            val intent = Intent(view.context,MainActivity::class.java)
-//            startActivity(intent)
+            val intent = Intent(view.context, RegActivity::class.java)
+            startActivity(intent)
         }
-        
+
         return view
     }
 
     private fun getProdList() {
         val request = object : StringRequest(
             Request.Method.POST,
-            "http://192.168.219.46:8089/auction/prodCheck",
+            "http://192.168.219.145:8089/auction/products/prodCheck",
             Response.Listener { response ->
                 Log.d("response", response)
 

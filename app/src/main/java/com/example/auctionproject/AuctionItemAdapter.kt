@@ -12,27 +12,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-
+import com.bumptech.glide.Glide
 import java.util.*
 
 class AuctionItemAdapter(private val context: Context, private val items: List<Products>) :
     RecyclerView.Adapter<AuctionItemAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val prodImg: ImageView
-        val prodName: TextView
-        val curBidprice: TextView
-        val immediatePrice: TextView
-        val timeLeft: TextView
-
-        init {
-            prodImg = itemView.findViewById(R.id.prodImg)
-            prodName = itemView.findViewById(R.id.prodName)
-            curBidprice = itemView.findViewById(R.id.curBidPrice)
-            immediatePrice = itemView.findViewById(R.id.buyPrice)
-            timeLeft = itemView.findViewById(R.id.timeLeft)
-
-        }
+        val prodImg: ImageView = itemView.findViewById(R.id.prodImg)
+        val prodName: TextView = itemView.findViewById(R.id.prodName)
+        val curBidprice: TextView = itemView.findViewById(R.id.curBidPrice)
+        val immediatePrice: TextView = itemView.findViewById(R.id.buyPrice)
+        val timeLeft: TextView = itemView.findViewById(R.id.timeLeft)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -42,32 +33,33 @@ class AuctionItemAdapter(private val context: Context, private val items: List<P
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val base64String = items[position].prodImgPath
-        // Base64 문자열이 null이거나 빈 문자열인지 확인
-        if (base64String.isNullOrEmpty()) {
-            // 예를 들어, 기본 이미지를 설정하거나, null을 처리하는 로직을 추가합니다.
-            holder.prodImg.setImageResource(R.drawable.ic_launcher_background) // 기본 이미지 설정 (필요시)
-        } else {
-            val bitmap = base64ToBitmap(base64String)
-            holder.prodImg.setImageBitmap(bitmap)
+        val product = items[position]
+
+        // Glide를 사용하여 이미지 로드
+        val imageUrl = product.prodImgPath?.let {
+            if (it.startsWith("http://") || it.startsWith("https://")) {
+                it
+            } else {
+                "http://192.168.219.145:8089$it"
+            }
         }
-        holder.prodName.text = items[position].prodName
 
-        val timeLeft = calculateTimeLeft(items[position].endAt)
-        holder.timeLeft.text = timeLeft
+        Glide.with(context)
+            .load(imageUrl)
+            .placeholder(R.drawable.placeholder) // 로딩 중 표시할 이미지
+            .error(R.drawable.error) // 로드 실패 시 표시할 이미지
+            .into(holder.prodImg)
 
-        holder.curBidprice.text = "${items[position].bidPrice}원"
-        holder.immediatePrice.text = "${items[position].immediatePrice}원"
+        holder.prodName.text = product.prodName
+        holder.curBidprice.text = "${product.bidPrice}원"
+        holder.immediatePrice.text = "${product.immediatePrice}원"
+        holder.timeLeft.text = calculateTimeLeft(product.endAt)
 
         holder.itemView.setOnClickListener {
-            // 인텐트 활용 액티비티(새롭게 만들기) 전환
-            // UID, NAME, IMGPATH
-
-            var intent = Intent(context, ItemDetail::class.java)
-            intent.putExtra("prodIdx",items[position].prodIdx)
+            val intent = Intent(context, ItemDetail::class.java)
+            intent.putExtra("prodIdx", product.prodIdx)
             context.startActivity(intent)
         }
-
     }
 
     override fun getItemCount() = items.size
@@ -81,17 +73,6 @@ class AuctionItemAdapter(private val context: Context, private val items: List<P
             return "${hours}시간 ${minutes}분"
         } else {
             return "마감"
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun base64ToBitmap(base64String: String): Bitmap? {
-        return try {
-            val decodedBytes = Base64.getDecoder().decode(base64String)
-            BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
         }
     }
 }
