@@ -46,7 +46,7 @@ class BidItemAdapter(private val bidItems: ArrayList<BidItem>) : RecyclerView.Ad
                 if (it.startsWith("http://") || it.startsWith("https://")) {
                     it
                 } else {
-                    "http://192.168.219.145:8089$it"
+                    "http://192.168.0.23:8089$it"
                 }
             }
 

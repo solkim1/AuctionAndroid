@@ -23,9 +23,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingLeft="100dp"
         android:paddingTop="100dp"
-        android:paddingRight="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -35,6 +33,7 @@
 
         <TextView
             android:id="@+id/textView2"
+            style="@style/TextViewStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -46,9 +45,12 @@
 
         <EditText
             android:id="@+id/etUpdId"
+            style="@style/EditTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
             android:ems="10"
             android:hint="아이디"
             android:inputType="text"
@@ -58,9 +60,12 @@
 
         <EditText
             android:id="@+id/etUpdPassword"
+            style="@style/EditTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
             android:ems="10"
             android:hint="비밀번호"
             android:inputType="text"
@@ -70,9 +75,12 @@
 
         <EditText
             android:id="@+id/etUpdNickname"
+            style="@style/EditTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
             android:ems="10"
             android:hint="닉네임"
             android:inputType="text"
@@ -82,9 +90,12 @@
 
         <Button
             android:id="@+id/btnUpdate"
+            style="@style/ButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
             android:text="수정 완료"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

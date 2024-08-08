@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SOL MARKET</string>
+    <string name="app_name">Bid Spot</string>
     <string name="bid_price_format">입찰 가격: %s원</string>
     <string name="seller_nickname_format">판매자: %s</string>
     <string name="item_image_desc">%1$s 이미지</string>

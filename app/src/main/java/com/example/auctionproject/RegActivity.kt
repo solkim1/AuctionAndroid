@@ -52,7 +52,7 @@ class RegActivity : AppCompatActivity() {
         mContext = this
         mActivity = this
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        val toolbar: Toolbar = findViewById(R.id.tbUpdProf)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -167,7 +167,7 @@ class RegActivity : AppCompatActivity() {
         val base64Image = encodeImageToBase64(imageBitmap)
         Log.d("RegActivity", "Base64 Image: $base64Image")
 
-        val url = "http://192.168.219.145:8089/auction/products/prodRegister"
+        val url = "http://192.168.0.23:8089/auction/products/prodRegister"
 
         val params = HashMap<String, String>()
         params["prodName"] = prodName

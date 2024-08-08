@@ -1,5 +1,6 @@
 package com.example.auctionproject
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,73 +22,22 @@ import com.google.gson.reflect.TypeToken
 import org.json.JSONObject
 
 class ChatFragment : Fragment() {
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: ChatAdapter
-    private lateinit var etMessage: EditText
-    private lateinit var btnSend: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
-        recyclerView = view.findViewById(R.id.recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        etMessage = view.findViewById(R.id.et_message)
-        btnSend = view.findViewById(R.id.btn_send)
+
+        val btnRegist = view.findViewById<Button>(R.id.btnRegist)
+
+        // 상품 등록 버튼 클릭했을 때
+        btnRegist.setOnClickListener {
+            val intent = Intent(view.context, RegActivity::class.java)
+            startActivity(intent)
+        }
+
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        fetchChatMessages()
 
-        btnSend.setOnClickListener {
-            val message = etMessage.text.toString()
-            if (message.isNotEmpty()) {
-                sendMessage(message)
-                etMessage.text.clear()
-            }
-        }
-    }
 
-    private fun fetchChatMessages() {
-        val url = "http://your-server-url/chat/messages"
 
-        val request = JsonArrayRequest(
-            Request.Method.GET, url, null,
-            { response ->
-                val gson = Gson()
-                val messageType = object : TypeToken<List<ChatMessage>>() {}.type
-                val messages: List<ChatMessage> = gson.fromJson(response.toString(), messageType)
-
-                val sharedPreferences = activity?.getSharedPreferences("MyAppPrefs", AppCompatActivity.MODE_PRIVATE)
-                val currentUserId = sharedPreferences?.getString("userId", "") ?: ""
-
-                adapter = ChatAdapter(messages, currentUserId)
-                recyclerView.adapter = adapter
-            },
-            { error ->
-                Toast.makeText(context, "오류: ${error.message}", Toast.LENGTH_SHORT).show()
-            }
-        )
-
-        Volley.newRequestQueue(context).add(request)
-    }
-
-    private fun sendMessage(message: String) {
-        val url = "http://your-server-url/chat/send"
-        val jsonObject = JSONObject()
-        jsonObject.put("message", message)
-
-        val request = JsonObjectRequest(
-            Request.Method.POST, url, jsonObject,
-            { response ->
-                // 메시지 전송 성공
-                fetchChatMessages() // 채팅 새로고침
-            },
-            { error ->
-                Toast.makeText(context, "메시지 전송 오류: ${error.message}", Toast.LENGTH_SHORT).show()
-            }
-        )
-
-        Volley.newRequestQueue(context).add(request)
-    }
 }

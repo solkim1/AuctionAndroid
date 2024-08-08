@@ -42,13 +42,7 @@ class AuctionItemsFragment : Fragment() {
         recyclerView.layoutManager = GridLayoutManager(view.context, 2)
         getProdList()
 
-        val btnRegist = view.findViewById<Button>(R.id.btnRegist)
 
-        // 상품 등록 버튼 클릭했을 때
-        btnRegist.setOnClickListener {
-            val intent = Intent(view.context, RegActivity::class.java)
-            startActivity(intent)
-        }
 
         return view
     }
@@ -56,7 +50,7 @@ class AuctionItemsFragment : Fragment() {
     private fun getProdList() {
         val request = object : StringRequest(
             Request.Method.POST,
-            "http://192.168.219.145:8089/auction/products/prodCheck",
+            "http://192.168.0.23:8089/auction/products/prodCheck",
             Response.Listener { response ->
                 Log.d("response", response)
 
