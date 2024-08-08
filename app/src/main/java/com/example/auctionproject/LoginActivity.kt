@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
             val json = gson.toJson(user)
             val jsonObject = JSONObject(json)
 
-            val url = "http://192.168.219.145:8089/auction/users/login"
+            val url = "${NetworkUtils.getBaseUrl()}/auction/users/login"
 
             val request = object : JsonObjectRequest(
                 Request.Method.POST, url, jsonObject,

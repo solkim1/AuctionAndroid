@@ -56,7 +56,7 @@ class AuctionItemsFragment : Fragment() {
     private fun getProdList() {
         val request = object : StringRequest(
             Request.Method.POST,
-            "http://192.168.219.145:8089/auction/products/prodCheck",
+            "${NetworkUtils.getBaseUrl()}/auction/products/prodCheck",
             Response.Listener { response ->
                 Log.d("response", response)
 

@@ -30,19 +30,19 @@ import java.io.ByteArrayOutputStream
 
 class RegActivity : AppCompatActivity() {
 
-    val CAMERA = arrayOf(android.Manifest.permission.CAMERA)
+    private val CAMERA = arrayOf(android.Manifest.permission.CAMERA)
     val STORAGE = arrayOf(
         android.Manifest.permission.READ_EXTERNAL_STORAGE,
         android.Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
-    val CAMERA_CODE = 98
-    val STORAGE_CODE = 99
+    private val CAMERA_CODE = 98
+    private val STORAGE_CODE = 99
 
     lateinit var mContext: Context
-    lateinit var mActivity: Activity
+    private lateinit var mActivity: Activity
 
-    lateinit var ivImg: ImageView
-    lateinit var queue: RequestQueue
+    private lateinit var ivImg: ImageView
+    private lateinit var queue: RequestQueue
     private lateinit var cameraLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -108,7 +108,7 @@ class RegActivity : AppCompatActivity() {
         }
     }
 
-    fun callCamera() {
+    private fun callCamera() {
         if (checkPermission(CAMERA, CAMERA_CODE)) {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             Log.d("RegActivity", "Launching camera intent.")
@@ -118,7 +118,7 @@ class RegActivity : AppCompatActivity() {
         }
     }
 
-    fun checkPermission(permissions: Array<String>, type: Int): Boolean {
+    private fun checkPermission(permissions: Array<String>, type: Int): Boolean {
         for (permission in permissions) {
             if (ContextCompat.checkSelfPermission(
                     mContext,
@@ -156,24 +156,31 @@ class RegActivity : AppCompatActivity() {
         }
     }
 
-    fun encodeImageToBase64(image: Bitmap): String {
+    private fun encodeImageToBase64(image: Bitmap): String {
         val byteArrayOutputStream = ByteArrayOutputStream()
         image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
         val byteArray = byteArrayOutputStream.toByteArray()
         return Base64.encodeToString(byteArray, Base64.DEFAULT).replace("\n", "")
     }
 
-    fun uploadProductToServer(prodName: String, prodInfo: String, bidPrice: String, immediatePrice: String, imageBitmap: Bitmap) {
+    private fun uploadProductToServer(prodName: String, prodInfo: String, bidPrice: String, immediatePrice: String, imageBitmap: Bitmap) {
         val base64Image = encodeImageToBase64(imageBitmap)
         Log.d("RegActivity", "Base64 Image: $base64Image")
 
-        val url = "http://192.168.219.145:8089/auction/products/prodRegister"
+        val url = "${NetworkUtils.getBaseUrl()}/auction/products/prodRegister"
+
+        val currentTime = System.currentTimeMillis()
+        val createdAt = currentTime.toString()
+        val endAt = (currentTime + 24 * 60 * 60 * 1000).toString()
 
         val params = HashMap<String, String>()
+
         params["prodName"] = prodName
         params["prodInfo"] = prodInfo
         params["bidPrice"] = bidPrice
         params["immediatePrice"] = immediatePrice
+        params["created_at"] = createdAt
+        params["end_at"] = endAt
         params["prodImgPath"] = base64Image
 
         val sharedPref = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)

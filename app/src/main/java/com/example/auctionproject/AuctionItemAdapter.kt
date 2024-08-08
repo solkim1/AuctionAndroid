@@ -40,7 +40,7 @@ class AuctionItemAdapter(private val context: Context, private val items: List<P
             if (it.startsWith("http://") || it.startsWith("https://")) {
                 it
             } else {
-                "http://192.168.219.145:8089$it"
+                "${NetworkUtils.getBaseUrl()}$it"
             }
         }
 

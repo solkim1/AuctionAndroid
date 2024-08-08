@@ -49,7 +49,7 @@ class BidItemsFragment : Fragment() {
         val token = sharedPreferences?.getString("auth_token", null)
 
         if (userId != null && token != null) {
-            val url = "http://192.168.219.145:8089/auction/products/userBidItems"
+            val url = "${NetworkUtils.getBaseUrl()}/auction/products/userBidItems"
             val jsonObject = JSONObject()
             jsonObject.put("userId", userId)
 
