@@ -24,7 +24,6 @@ class AuctionItemAdapter(private val context: Context, private val items: List<P
         val curBidprice: TextView = itemView.findViewById(R.id.curBidPrice)
         val immediatePrice: TextView = itemView.findViewById(R.id.buyPrice)
         val timeLeft: TextView = itemView.findViewById(R.id.timeLeft)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,8 +36,16 @@ class AuctionItemAdapter(private val context: Context, private val items: List<P
         val product = items[position]
 
         // Glide를 사용하여 이미지 로드
+        val imageUrl = product.prodImgPath?.let {
+            if (it.startsWith("http://") || it.startsWith("https://")) {
+                it
+            } else {
+                "http://192.168.219.145:8089$it"
+            }
+        }
+
         Glide.with(context)
-            .load(product.prodImgPath)
+            .load(imageUrl)
             .placeholder(R.drawable.placeholder) // 로딩 중 표시할 이미지
             .error(R.drawable.error) // 로드 실패 시 표시할 이미지
             .into(holder.prodImg)
