@@ -2,8 +2,6 @@ package com.example.auctionproject
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +11,9 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import java.util.*
+import java.text.NumberFormat
+import java.util.Date
+import java.util.Locale
 
 class AuctionItemAdapter(private val context: Context, private val items: List<Products>) :
     RecyclerView.Adapter<AuctionItemAdapter.ViewHolder>() {
@@ -21,7 +21,7 @@ class AuctionItemAdapter(private val context: Context, private val items: List<P
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val prodImg: ImageView = itemView.findViewById(R.id.prodImg)
         val prodName: TextView = itemView.findViewById(R.id.prodName)
-        val curBidprice: TextView = itemView.findViewById(R.id.curBidPrice)
+        val curBidPrice: TextView = itemView.findViewById(R.id.curBidPrice)
         val immediatePrice: TextView = itemView.findViewById(R.id.buyPrice)
         val timeLeft: TextView = itemView.findViewById(R.id.timeLeft)
     }
@@ -40,7 +40,7 @@ class AuctionItemAdapter(private val context: Context, private val items: List<P
             if (it.startsWith("http://") || it.startsWith("https://")) {
                 it
             } else {
-                "http://192.168.219.145:8089$it"
+                "http://192.168.219.53:8089$it"
             }
         }
 
@@ -51,13 +51,13 @@ class AuctionItemAdapter(private val context: Context, private val items: List<P
             .into(holder.prodImg)
 
         holder.prodName.text = product.prodName
-        holder.curBidprice.text = "${product.bidPrice}원"
-        holder.immediatePrice.text = "${product.immediatePrice}원"
+        holder.curBidPrice.text = "${NumberFormat.getNumberInstance(Locale.KOREA).format(product.bidPrice)}원"
+        holder.immediatePrice.text = "${NumberFormat.getNumberInstance(Locale.KOREA).format(product.immediatePrice)}원"
         holder.timeLeft.text = calculateTimeLeft(product.endAt)
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ItemDetail::class.java)
-            intent.putExtra("prodIdx", product.prodIdx)
+            intent.putExtra("prodIdx", product.prodIdx.toString())
             context.startActivity(intent)
         }
     }

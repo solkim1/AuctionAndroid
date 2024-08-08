@@ -45,6 +45,7 @@ class LoginActivity : AppCompatActivity() {
                     if (token.isNotEmpty()) {
                         // 현재 회원 정보로 로그인 성공
                         val sharedPref = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+
                         with(sharedPref.edit()) {
                             putString("user_id", inputId) // 사용자 ID 저장
                             putString("auth_token", token) // JWT 토큰 저장

@@ -10,7 +10,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.*
+import com.android.volley.AuthFailureError
+import com.android.volley.NetworkError
+import com.android.volley.NetworkResponse
+import com.android.volley.NoConnectionError
+import com.android.volley.ParseError
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.ServerError
+import com.android.volley.TimeoutError
 import com.android.volley.toolbox.HttpHeaderParser
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -49,7 +57,7 @@ class BidItemsFragment : Fragment() {
         val token = sharedPreferences?.getString("auth_token", null)
 
         if (userId != null && token != null) {
-            val url = "http://192.168.219.145:8089/auction/products/userBidItems"
+            val url = "http://192.168.219.53:8089/auction/products/userBidItems"
             val jsonObject = JSONObject()
             jsonObject.put("userId", userId)
 
