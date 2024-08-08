@@ -7,33 +7,58 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import java.text.NumberFormat
+import java.util.Locale
 
-class BidItemAdapter(private val bidItems: List<Products>) : RecyclerView.Adapter<BidItemAdapter.ViewHolder>() {
+class BidItemAdapter(private val bidItems: ArrayList<BidItem>) : RecyclerView.Adapter<BidItemAdapter.BidItemViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BidItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_bid, parent, false)
-        return ViewHolder(view)
+        return BidItemViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BidItemViewHolder, position: Int) {
         val bidItem = bidItems[position]
-
-        holder.prodName.text = bidItem.prodName
-        holder.bidPrice.text = bidItem.bidPrice.toString()
-
-        // 이미지 로드
-        Glide.with(holder.itemView.context)
-            .load("data:image/jpeg;base64,${bidItem.prodImgPath}")
-            .into(holder.prodImg)
+        holder.bind(bidItem)
     }
 
     override fun getItemCount(): Int {
         return bidItems.size
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val prodName: TextView = itemView.findViewById(R.id.prod_name)
-        val bidPrice: TextView = itemView.findViewById(R.id.bid_price)
-        val prodImg: ImageView = itemView.findViewById(R.id.prod_img)
+    class BidItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val itemImage: ImageView = itemView.findViewById(R.id.item_image)
+        private val itemName: TextView = itemView.findViewById(R.id.item_name)
+        private val bidPrice: TextView = itemView.findViewById(R.id.bid_price)
+        private val sellerNickname: TextView = itemView.findViewById(R.id.seller_nickname)
+
+        fun bind(bidItem: BidItem) {
+            itemName.text = bidItem.prodName
+
+            // 가격에 콤마 추가
+            val formattedPrice = NumberFormat.getNumberInstance(Locale.US).format(bidItem.bidPrice ?: 0)
+            bidPrice.text = itemView.context.getString(R.string.bid_price_format, formattedPrice)
+
+            sellerNickname.text = itemView.context.getString(R.string.seller_nickname_format, bidItem.sellerNickname ?: "알 수 없음")
+
+            // 이미지 URL 변환
+            val imageUrl = bidItem.prodImgPath?.let {
+                if (it.startsWith("http://") || it.startsWith("https://")) {
+                    it
+                } else {
+                    "http://192.168.219.145:8089$it"
+                }
+            }
+
+            // Glide를 사용해 이미지 로드
+            Glide.with(itemView.context)
+                .load(imageUrl)
+                .placeholder(R.drawable.placeholder) // 로딩 중 표시할 이미지
+                .error(R.drawable.error) // 로드 실패 시 표시할 이미지
+                .into(itemImage)
+
+            // contentDescription 설정
+            itemImage.contentDescription = itemView.context.getString(R.string.item_image_desc, bidItem.prodName)
+        }
     }
 }

@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
             val json = gson.toJson(user)
             val jsonObject = JSONObject(json)
 
-            val url = "http://192.168.219.53:8089/auction/users/login"
+            val url = "http://192.168.219.145:8089/auction/users/login"
 
             val request = object : JsonObjectRequest(
                 Request.Method.POST, url, jsonObject,
@@ -43,15 +43,16 @@ class LoginActivity : AppCompatActivity() {
 
                     val token = response.optString("token")
                     if (token.isNotEmpty()) {
+                        // 현재 회원 정보로 로그인 성공
                         val sharedPref = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
                         with(sharedPref.edit()) {
-                            putString("user_id", inputId)
-                            putString("auth_token", token)
+                            putString("user_id", inputId) // 사용자 ID 저장
+                            putString("auth_token", token) // JWT 토큰 저장
                             apply()
                         }
 
                         val intent = Intent(this, MainActivity::class.java)
-                        finishAffinity()
+                        finishAffinity() // 액티비티 스택 비우기
                         startActivity(intent)
                     } else {
                         Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
@@ -69,10 +70,12 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
 
+            // 큐에 요청 추가
             Volley.newRequestQueue(this).add(request)
         }
 
         btnJoinAct.setOnClickListener {
+            // 회원가입 버튼 클릭 시 회원가입 화면으로 이동
             val intent = Intent(this, JoinActivity::class.java)
             startActivity(intent)
         }

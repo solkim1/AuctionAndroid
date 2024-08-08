@@ -4,6 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.KotlinJsonAdapterFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,5 +49,16 @@ class MainActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.nav_host_fragment, fragment)
             .commit()
+    }
+
+    fun createRetrofit(): Retrofit {
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+
+        return Retrofit.Builder()
+            .baseUrl("http://192.168.219.145:8089/")
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
     }
 }

@@ -1,5 +1,6 @@
 package com.example.auctionproject
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -24,7 +25,7 @@ class MyPageFragment : Fragment() {
     private lateinit var btnQuit: Button
     private lateinit var btnLogOut: Button
     private lateinit var btnUpdProf: Button
-    private lateinit var btnSupport:Button
+    private lateinit var btnSupport: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_my_page, container, false)
@@ -43,7 +44,7 @@ class MyPageFragment : Fragment() {
         fetchUserProfile()
 
         btnQuit.setOnClickListener {
-            deleteUserAccount()
+            confirmDeleteUserAccount()
         }
 
         btnLogOut.setOnClickListener {
@@ -63,14 +64,14 @@ class MyPageFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        fetchUserProfile()
+        fetchUserProfile() // 다시 사용자 정보를 불러옴
     }
 
     private fun fetchUserProfile() {
         val sharedPreferences = activity?.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         val token = sharedPreferences?.getString("auth_token", "") ?: ""
 
-        val url = "http://192.168.219.53:8089/auction/profile"
+        val url = "http://192.168.219.145:8089/auction/profile"
 
         val request = object : JsonObjectRequest(
             Request.Method.GET, url, null,
@@ -99,7 +100,7 @@ class MyPageFragment : Fragment() {
         val sharedPreferences = activity?.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         val token = sharedPreferences?.getString("auth_token", "") ?: ""
 
-        val url = "http://192.168.219.53:8089/auction/profile/comments/count/$userId"
+        val url = "http://192.168.219.145:8089/auction/profile/comments/count/$userId"
 
         val request = object : StringRequest(
             Request.Method.GET, url,
@@ -132,12 +133,23 @@ class MyPageFragment : Fragment() {
         Volley.newRequestQueue(context).add(request)
     }
 
+    private fun confirmDeleteUserAccount() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("계정 삭제")
+            .setMessage("정말로 계정을 삭제하시겠습니까?")
+            .setPositiveButton("예") { _, _ ->
+                deleteUserAccount()
+            }
+            .setNegativeButton("아니오", null)
+            .show()
+    }
+
     private fun deleteUserAccount() {
         val sharedPreferences = activity?.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         val token = sharedPreferences?.getString("auth_token", "") ?: ""
         val userId = sharedPreferences?.getString("user_id", "") ?: ""
 
-        val url = "http://192.168.219.46:8089/auction/users/$userId"
+        val url = "http://192.168.219.145:8089/auction/users/$userId"
 
         val request = object : StringRequest(
             Request.Method.DELETE, url,
