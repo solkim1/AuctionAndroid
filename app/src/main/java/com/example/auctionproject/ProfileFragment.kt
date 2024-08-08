@@ -2,8 +2,8 @@ package com.example.auctionproject
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -164,9 +164,10 @@ class ProfileFragment : Fragment() {
         Volley.newRequestQueue(context).add(request)
     }
 
-    private fun updateCommentCount(count: Int) {
-        // 예를 들어, 댓글 갯수를 표시할 TextView를 업데이트
-        tvComCnt.text = count.toString()
+    private fun updateUI(user: Users) {
+        tvUserId.text = "User ID: ${user.userId}"
+        tvNickname.text = "Nickname: ${user.nickname}"
+        tvLikes.text = "Likes: ${user.likes}"
     }
 
     private fun submitComment(comment: String) {

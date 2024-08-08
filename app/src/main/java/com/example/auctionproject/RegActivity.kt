@@ -52,7 +52,7 @@ class RegActivity : AppCompatActivity() {
         mContext = this
         mActivity = this
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        val toolbar: Toolbar = findViewById(R.id.tbUpdProf)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -174,7 +174,6 @@ class RegActivity : AppCompatActivity() {
         val endAt = (currentTime + 24 * 60 * 60 * 1000).toString()
 
         val params = HashMap<String, String>()
-
         params["prodName"] = prodName
         params["prodInfo"] = prodInfo
         params["bidPrice"] = bidPrice

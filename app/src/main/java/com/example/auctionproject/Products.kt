@@ -12,5 +12,6 @@ data class Products(
     val createdAt: Date,
     val endAt: Date,
     val userId: String,
+    val sellerNickname:String? = null,
     val prodImgPath: String?
 )
