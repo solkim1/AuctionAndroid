@@ -44,7 +44,7 @@ class JoinActivity : AppCompatActivity() {
 
             val joinRequest = object : StringRequest(
                 Request.Method.POST,
-                "http://192.168.219.145:8089/auction/users/join",
+                "http://192.168.219.53:8089/auction/users/join",
                 { response ->
                     Log.d("response", response.toString())
                     Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
@@ -73,7 +73,7 @@ class JoinActivity : AppCompatActivity() {
     private fun loginUser(userId: String, password: String) {
         val loginRequest = object : StringRequest(
             Request.Method.POST,
-            "http://192.168.219.145:8089/auction/users/login",
+            "http://192.168.219.53:8089/auction/users/login",
             { response ->
                 Log.d("login response", response)
                 val jsonResponse = JSONObject(response)
