@@ -26,6 +26,7 @@ class ProfileFragment : Fragment() {
     private lateinit var tvNickname: TextView
     private lateinit var tvComCnt: TextView
     private lateinit var tvLikeCnt: TextView
+    private lateinit var tvLikes: TextView
     private lateinit var rvComments: RecyclerView
     private lateinit var commentAdapter: CommentAdapter
     private lateinit var queue: RequestQueue
@@ -40,6 +41,7 @@ class ProfileFragment : Fragment() {
         tvNickname = view.findViewById(R.id.tv_nickname)
         tvComCnt = view.findViewById(R.id.tvComCnt)
         tvLikeCnt = view.findViewById(R.id.tvLikeCnt)
+        tvLikes = view.findViewById(R.id.tv_likes)
         rvComments = view.findViewById(R.id.rvComments)
         btnSubmitComment = view.findViewById(R.id.btnSubmitComment)
         etComment = view.findViewById(R.id.etComment)
@@ -69,6 +71,11 @@ class ProfileFragment : Fragment() {
         // 댓글 리스트와 댓글 수를 가져옴
         fetchComments()
         fetchCommentCount()
+
+        // 좋아요 클릭 이벤트 처리
+        tvLikes.setOnClickListener {
+            incrementLikeCount()
+        }
 
         btnSubmitComment.setOnClickListener {
             val commentText = etComment.text.toString()
@@ -192,6 +199,42 @@ class ProfileFragment : Fragment() {
                 val headers = HashMap<String, String>()
                 headers["Authorization"] = "Bearer $token"
                 headers["Content-Type"] = "application/json"
+                Log.d("ProfileFragment", "헤더: $headers")
+                return headers
+            }
+        }
+
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    private fun incrementLikeCount() {
+        val sharedPreferences = activity?.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        val token = sharedPreferences?.getString("auth_token", "") ?: ""
+        val userId = sharedPreferences?.getString("user_id", "") ?: ""
+
+        val url = "${NetworkUtils.getBaseUrl()}/auction/profile/likes/increment/$userId"
+
+        val request = object : JsonObjectRequest(
+            Method.POST, url, null,
+            Response.Listener { response ->
+                try {
+                    Log.d("ProfileFragment", "좋아요 증가 응답: $response")
+                    // 좋아요 수 증가 후 업데이트
+                    val updatedLikeCount = response.getInt("likes")
+                    tvLikeCnt.text = updatedLikeCount.toString()
+                } catch (e: JSONException) {
+                    Toast.makeText(context, "좋아요 수 업데이트 중 오류 발생", Toast.LENGTH_SHORT).show()
+                    Log.e("ProfileFragment", "좋아요 수 JSON 파싱 오류", e)
+                }
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(context, "좋아요 수 업데이트 중 오류 발생: ${error.message}", Toast.LENGTH_SHORT).show()
+                Log.e("ProfileFragment", "좋아요 수 업데이트 중 오류 발생", error)
+            }
+        ) {
+            override fun getHeaders(): MutableMap<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Authorization"] = "Bearer $token"
                 Log.d("ProfileFragment", "헤더: $headers")
                 return headers
             }
