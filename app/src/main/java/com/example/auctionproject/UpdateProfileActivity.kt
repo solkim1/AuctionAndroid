@@ -43,7 +43,9 @@ class UpdateProfileActivity : AppCompatActivity() {
         val token = sharedPreferences?.getString("auth_token", "") ?: ""
         val userId = sharedPreferences?.getString("user_id", "") ?: ""
 
+
         val url = "http://192.168.0.23:8089/auction/users/updateProfile"
+
         val jsonRequest = JSONObject()
         jsonRequest.put("newUserId", userId)
         jsonRequest.put("password", etUpdPassword.text.toString())

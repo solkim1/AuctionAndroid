@@ -4,10 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.squareup.moshi.KotlinJsonAdapterFactory
+import com.squareup.moshi.Moshi
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.KotlinJsonAdapterFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_chat -> {
-                    loadFragment(ChatFragment())
+                    loadFragment(MyProdFragment())
                     true
                 }
                 R.id.navigation_my_page -> {
@@ -57,7 +57,9 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         return Retrofit.Builder()
+
             .baseUrl("192.168.0.23:8089/")
+
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     }

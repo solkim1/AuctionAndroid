@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -50,7 +49,9 @@ class AuctionItemsFragment : Fragment() {
     private fun getProdList() {
         val request = object : StringRequest(
             Request.Method.POST,
+
             "http://192.168.0.23:8089/auction/products/prodCheck",
+
             Response.Listener { response ->
                 Log.d("response", response)
 
