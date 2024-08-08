@@ -69,7 +69,7 @@ class ProfileFragment : Fragment() {
         val token = sharedPreferences?.getString("auth_token", "") ?: ""
         val userId = sharedPreferences?.getString("user_id", "") ?: ""
 
-        val url = "http://192.168.219.54:8089/auction/comments/$userId"
+        val url = "${NetworkUtils.getBaseUrl()}/auction/comments/$userId"
 
         val request = object : JsonArrayRequest(
             Method.GET, url, null,

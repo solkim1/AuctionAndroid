@@ -26,6 +26,7 @@ class MyPageFragment : Fragment() {
     private lateinit var btnLogOut: Button
     private lateinit var btnUpdProf: Button
     private lateinit var btnSupport: Button
+    private lateinit var btnShowProfile: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_my_page, container, false)
@@ -36,6 +37,7 @@ class MyPageFragment : Fragment() {
         btnLogOut = view.findViewById(R.id.btnLogOut)
         btnUpdProf = view.findViewById(R.id.btnUpdProf)
         btnSupport = view.findViewById(R.id.btnSupport)
+        btnShowProfile = view.findViewById(R.id.btnShowProfile)
         return view
     }
 
@@ -59,6 +61,15 @@ class MyPageFragment : Fragment() {
         btnSupport.setOnClickListener {
             val intent = Intent(activity, SupportActivity::class.java)
             startActivity(intent)
+        }
+
+        btnShowProfile.setOnClickListener {
+            val profileFragment = ProfileFragment()
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment, profileFragment)
+                .addToBackStack(null)
+                .commit()
         }
     }
 
