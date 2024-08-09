@@ -11,6 +11,7 @@
     <color name="teal_700">#018786</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="yourDesiredColor">#A22929</color>
+    <color name="colortoolbar">#A22929</color>
+    <color name="primaryDarkColor">#FF5722</color>
 
 </resources>

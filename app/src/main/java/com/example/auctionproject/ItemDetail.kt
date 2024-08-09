@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -59,6 +60,14 @@ class ItemDetail : AppCompatActivity() {
         btnBid = findViewById(R.id.btnBid)
         btnBuy = findViewById(R.id.btnBuy)
 
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+
         // RequestQueue 초기화
         queue = Volley.newRequestQueue(this@ItemDetail)
 
@@ -87,6 +96,7 @@ class ItemDetail : AppCompatActivity() {
             intent.putExtra("buyState","buy")
             startActivity(intent)
         }
+
     }
 
     // 제품 세부정보 가져오기

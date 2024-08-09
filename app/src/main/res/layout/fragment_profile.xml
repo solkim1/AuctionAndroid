@@ -158,7 +158,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="♡"
+        android:text="♥"
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/tvProfName"
         app:layout_constraintStart_toEndOf="@+id/tvProfName"
