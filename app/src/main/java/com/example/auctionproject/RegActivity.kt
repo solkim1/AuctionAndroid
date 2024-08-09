@@ -168,7 +168,7 @@ class RegActivity : AppCompatActivity() {
         Log.d("RegActivity", "Base64 Image: $base64Image")
 
 
-        val url = "http://192.168.0.23:8089/auction/products/prodRegister"
+        val url = "http://192.168.219.237:8089/auction/products/prodRegister"
 
 
         val params = HashMap<String, String>()

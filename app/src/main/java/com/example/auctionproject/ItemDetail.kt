@@ -91,7 +91,7 @@ class ItemDetail : AppCompatActivity() {
 
     // 제품 세부정보 가져오기
     private fun getProdDetail(prodIdx: String?) {
-        val url = "http://192.168.219.53:8089/auction/products/prodDetail"
+        val url = "http://192.168.219.237:8089/auction/products/prodDetail"
         val request = object : StringRequest(
             Request.Method.POST,
 
@@ -113,7 +113,7 @@ class ItemDetail : AppCompatActivity() {
                     if (it.startsWith("http://") || it.startsWith("https://")) {
                         it
                     } else {
-                        "http://192.168.219.53:8089$it"
+                        "http://192.168.219.237:8089$it"
                     }
                 }
                 Glide.with(this)

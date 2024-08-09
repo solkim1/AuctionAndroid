@@ -54,7 +54,7 @@ class JoinActivity : AppCompatActivity() {
             val joinRequest = object : StringRequest(
                 Request.Method.POST,
 
-                "http://192.168.0.23:8089/auction/users/join",
+                "http://192.168.219.237:8089/auction/users/join",
 
                 { response ->
                     Log.d("response", response.toString())
@@ -85,7 +85,7 @@ class JoinActivity : AppCompatActivity() {
         val loginRequest = object : StringRequest(
             Request.Method.POST,
 
-            "http://192.168.0.23:8089/auction/users/login",
+            "http://192.168.219.237:8089/auction/users/login",
 
             { response ->
                 Log.d("login response", response)

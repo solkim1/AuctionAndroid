@@ -38,7 +38,7 @@ class MyProdFragment : Fragment() {
 
         val request = object : StringRequest(
             Method.POST,
-            "http://192.168.0.23:8089/auction/products/myProd",
+            "http://192.168.219.237:8089/auction/products/myProd",
             Response.Listener { response ->
                 val utf8Response = String(response.toByteArray(Charsets.ISO_8859_1), Charsets.UTF_8)
 

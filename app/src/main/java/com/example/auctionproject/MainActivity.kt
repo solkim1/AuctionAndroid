@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
         return Retrofit.Builder()
 
-            .baseUrl("192.168.0.23:8089/")
+            .baseUrl("192.168.219.237:8089/")
 
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()

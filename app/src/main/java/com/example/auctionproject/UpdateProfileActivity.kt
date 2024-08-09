@@ -44,7 +44,7 @@ class UpdateProfileActivity : AppCompatActivity() {
         val userId = sharedPreferences?.getString("user_id", "") ?: ""
 
 
-        val url = "http://192.168.0.23:8089/auction/users/updateProfile"
+        val url = "http://192.168.219.237:8089/auction/users/updateProfile"
 
         val jsonRequest = JSONObject()
         jsonRequest.put("newUserId", userId)

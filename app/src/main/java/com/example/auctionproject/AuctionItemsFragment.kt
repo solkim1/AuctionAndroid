@@ -50,7 +50,7 @@ class AuctionItemsFragment : Fragment() {
         val request = object : StringRequest(
             Request.Method.POST,
 
-            "http://192.168.0.23:8089/auction/products/prodCheck",
+            "http://192.168.219.237:8089/auction/products/prodCheck",
 
             Response.Listener { response ->
                 Log.d("response", response)

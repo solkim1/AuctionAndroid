@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
             val jsonObject = JSONObject(json)
 
 
-            val url = "http://192.168.0.23:8089/auction/users/login"
+            val url = "http://192.168.219.237:8089/auction/users/login"
 
 
             val request = object : JsonObjectRequest(

@@ -72,7 +72,7 @@ class MyPageFragment : Fragment() {
         val token = sharedPreferences?.getString("auth_token", "") ?: ""
 
 
-        val url = "http://192.168.0.23:8089/auction/profile"
+        val url = "http://192.168.219.237:8089/auction/profile"
 
 
         val request = object : JsonObjectRequest(
@@ -103,7 +103,7 @@ class MyPageFragment : Fragment() {
         val token = sharedPreferences?.getString("auth_token", "") ?: ""
 
 
-        val url = "http://192.168.0.23:8089/auction/profile/comments/count/$userId"
+        val url = "http://192.168.219.237:8089/auction/profile/comments/count/$userId"
 
 
         val request = object : StringRequest(
@@ -154,7 +154,7 @@ class MyPageFragment : Fragment() {
         val userId = sharedPreferences?.getString("user_id", "") ?: ""
 
 
-        val url = "http://192.168.0.23:8089/auction/users/$userId"
+        val url = "http://192.168.219.237:8089/auction/users/$userId"
 
 
         val request = object : StringRequest(

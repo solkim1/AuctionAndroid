@@ -58,7 +58,7 @@ class BidItemsFragment : Fragment() {
 
         if (userId != null && token != null) {
 
-            val url = "http://192.168.0.23:8089/auction/products/userBidItems"
+            val url = "http://192.168.219.237:8089/auction/products/userBidItems"
 
             val jsonObject = JSONObject()
             jsonObject.put("userId", userId)
