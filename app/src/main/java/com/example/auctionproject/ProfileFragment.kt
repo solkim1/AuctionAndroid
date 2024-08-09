@@ -2,8 +2,8 @@ package com.example.auctionproject
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -24,8 +24,8 @@ import org.json.JSONObject
 
 class ProfileFragment : Fragment() {
     private lateinit var tvNickname: TextView
-    private lateinit var tvComCnt: TextView
-    private lateinit var tvLikeCnt: TextView
+    private lateinit var tvComCount: TextView
+    private lateinit var tvLikeCount: TextView
     private lateinit var tvLikes: TextView
     private lateinit var rvComments: RecyclerView
     private lateinit var commentAdapter: CommentAdapter
@@ -38,9 +38,9 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
-        tvNickname = view.findViewById(R.id.tv_nickname)
-        tvComCnt = view.findViewById(R.id.tvComCnt)
-        tvLikeCnt = view.findViewById(R.id.tvLikeCnt)
+        tvNickname = view.findViewById(R.id.tvProfName)
+        tvComCount = view.findViewById(R.id.tvComCount)
+        tvLikeCount = view.findViewById(R.id.tvLikeCount)
         tvLikes = view.findViewById(R.id.tv_likes)
         rvComments = view.findViewById(R.id.rvComments)
         btnSubmitComment = view.findViewById(R.id.btnSubmitComment)
@@ -65,8 +65,8 @@ class ProfileFragment : Fragment() {
         val likeCount = arguments?.getInt("likeCount")
 
         tvNickname.text = nickname
-        tvComCnt.text = commentCount?.toString() ?: "0"
-        tvLikeCnt.text = likeCount?.toString() ?: "0"
+        tvComCount.text = commentCount?.toString() ?: "0"
+        tvLikeCount.text = likeCount?.toString() ?: "0"
 
         // 댓글 리스트와 댓글 수를 가져옴
         fetchComments()
@@ -120,7 +120,7 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        Volley.newRequestQueue(context).add(request)
+        queue.add(request)
     }
 
     private fun updateComments(comments: List<Comment>) {
@@ -161,13 +161,11 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        Volley.newRequestQueue(context).add(request)
+        queue.add(request)
     }
 
-    private fun updateUI(user: Users) {
-        tvUserId.text = "User ID: ${user.userId}"
-        tvNickname.text = "Nickname: ${user.nickname}"
-        tvLikes.text = "Likes: ${user.likes}"
+    private fun updateCommentCount(commentCount: Int) {
+        tvComCount.text = commentCount.toString()
     }
 
     private fun submitComment(comment: String) {
@@ -205,7 +203,7 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        Volley.newRequestQueue(context).add(request)
+        queue.add(request)
     }
 
     private fun incrementLikeCount() {
@@ -222,7 +220,7 @@ class ProfileFragment : Fragment() {
                     Log.d("ProfileFragment", "좋아요 증가 응답: $response")
                     // 좋아요 수 증가 후 업데이트
                     val updatedLikeCount = response.getInt("likes")
-                    tvLikeCnt.text = updatedLikeCount.toString()
+                    tvLikeCount.text = updatedLikeCount.toString()
                 } catch (e: JSONException) {
                     Toast.makeText(context, "좋아요 수 업데이트 중 오류 발생", Toast.LENGTH_SHORT).show()
                     Log.e("ProfileFragment", "좋아요 수 JSON 파싱 오류", e)
@@ -241,6 +239,6 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        Volley.newRequestQueue(context).add(request)
+        queue.add(request)
     }
 }

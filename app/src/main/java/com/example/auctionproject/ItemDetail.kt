@@ -1,7 +1,14 @@
 package com.example.auctionproject
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
@@ -19,7 +26,7 @@ import java.util.Locale
 class ItemDetail : AppCompatActivity() {
 
     // RequestQueue 선언
-    lateinit var queue: RequestQueue
+    private lateinit var queue: RequestQueue
 
     // UI 요소 선언
     lateinit var prodImg: ImageView

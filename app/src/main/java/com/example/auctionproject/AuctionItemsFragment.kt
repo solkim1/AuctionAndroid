@@ -42,14 +42,6 @@ class AuctionItemsFragment : Fragment() {
         recyclerView.layoutManager = GridLayoutManager(view.context, 2)
         getProdList()
 
-        val btnRegist = view.findViewById<Button>(R.id.btnRegist)
-
-        // 상품 등록 버튼 클릭했을 때
-        btnRegist.setOnClickListener {
-            val intent = Intent(view.context, RegActivity::class.java)
-            startActivity(intent)
-        }
-
         return view
     }
 

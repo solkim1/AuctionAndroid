@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- fragment_profile.xml -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,12 +17,12 @@
         app:layout_constraintBottom_toTopOf="@+id/glProfile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.407"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/profileImageView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/tv_nickname"
+        android:id="@+id/tvProfName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -32,11 +32,11 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/btn_profile"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/profileImageView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tvCommentLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -44,11 +44,11 @@
         android:layout_marginBottom="36dp"
         android:text="댓글"
         app:layout_constraintBottom_toTopOf="@+id/glProfile"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/tv_nickname" />
+        app:layout_constraintStart_toEndOf="@+id/profileImageView"
+        app:layout_constraintTop_toBottomOf="@+id/tvProfName" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/profileImageView"
         android:layout_width="150dp"
         android:layout_height="150dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
@@ -60,35 +60,35 @@
         app:srcCompat="@drawable/profileimg2" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tvLikeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="좋아요"
-        app:layout_constraintBottom_toBottomOf="@+id/textView3"
-        app:layout_constraintStart_toEndOf="@+id/tvComCnt"
-        app:layout_constraintTop_toTopOf="@+id/textView3"
+        app:layout_constraintBottom_toBottomOf="@+id/tvCommentLabel"
+        app:layout_constraintStart_toEndOf="@+id/tvComCount"
+        app:layout_constraintTop_toTopOf="@+id/tvCommentLabel"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/tvComCnt"
+        android:id="@+id/tvComCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:text="0"
-        app:layout_constraintBottom_toBottomOf="@+id/textView3"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toTopOf="@+id/textView3" />
+        app:layout_constraintBottom_toBottomOf="@+id/tvCommentLabel"
+        app:layout_constraintStart_toEndOf="@+id/tvCommentLabel"
+        app:layout_constraintTop_toTopOf="@+id/tvCommentLabel" />
 
     <TextView
-        android:id="@+id/tvLikeCnt"
+        android:id="@+id/tvLikeCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:text="0"
-        app:layout_constraintBottom_toBottomOf="@+id/textView4"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="@+id/textView4" />
+        app:layout_constraintBottom_toBottomOf="@+id/tvLikeLabel"
+        app:layout_constraintStart_toEndOf="@+id/tvLikeLabel"
+        app:layout_constraintTop_toTopOf="@+id/tvLikeLabel" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -159,9 +159,9 @@
         android:layout_marginStart="16dp"
         android:text="♡"
         android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_nickname"
-        app:layout_constraintStart_toEndOf="@+id/tv_nickname"
-        app:layout_constraintTop_toTopOf="@+id/tv_nickname" />
+        app:layout_constraintBottom_toBottomOf="@+id/tvProfName"
+        app:layout_constraintStart_toEndOf="@+id/tvProfName"
+        app:layout_constraintTop_toTopOf="@+id/tvProfName" />
 
     <TextView
         android:id="@+id/tv_user_id"
