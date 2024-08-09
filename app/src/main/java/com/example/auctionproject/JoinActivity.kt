@@ -50,6 +50,10 @@ class JoinActivity : AppCompatActivity() {
                     Log.d("response", response.toString())
                     Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
                     loginUser(inputId, inputPw)
+
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 },
                 { error ->
                     Log.d("error", error.toString())
@@ -75,7 +79,7 @@ class JoinActivity : AppCompatActivity() {
         val loginRequest = object : StringRequest(
             Request.Method.POST,
 
-            "http://${NetworkUtils.getBaseUrl()}/auction/users/login",
+            "${NetworkUtils.getBaseUrl()}/auction/users/login",
 
             { response ->
                 Log.d("login response", response)
@@ -89,9 +93,7 @@ class JoinActivity : AppCompatActivity() {
                 editor.putString("user_id", userId)
                 editor.apply()
 
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
+
             },
             { error ->
                 Log.d("login error", error.toString())
