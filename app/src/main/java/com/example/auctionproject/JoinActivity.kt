@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -44,7 +45,7 @@ class JoinActivity : AppCompatActivity() {
 
             val joinRequest = object : StringRequest(
                 Request.Method.POST,
-                "http://192.168.219.53:8089/auction/users/join",
+                "${NetworkUtils.getBaseUrl()}/auction/users/join",
                 { response ->
                     Log.d("response", response.toString())
                     Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
@@ -73,7 +74,9 @@ class JoinActivity : AppCompatActivity() {
     private fun loginUser(userId: String, password: String) {
         val loginRequest = object : StringRequest(
             Request.Method.POST,
-            "http://192.168.219.53:8089/auction/users/login",
+
+            "http://${NetworkUtils.getBaseUrl()}/auction/users/login",
+
             { response ->
                 Log.d("login response", response)
                 val jsonResponse = JSONObject(response)
@@ -86,7 +89,7 @@ class JoinActivity : AppCompatActivity() {
                 editor.putString("user_id", userId)
                 editor.apply()
 
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
             },

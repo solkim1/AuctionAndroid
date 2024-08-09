@@ -42,13 +42,13 @@ class BuyActivity : AppCompatActivity() {
         val prodIdx = intent.getStringExtra("prodIdx")
         val buyState = intent.getStringExtra("buyState")
 
-        price.text = NumberFormat.getNumberInstance(Locale.KOREA).format(iPrice) + "원"
+        price.text =NumberFormat.getNumberInstance(Locale.KOREA).format(iPrice)+"원"
 
-        if (buyState.equals("bid")) {
-            btnAction.text = "입찰"
-        } else {
+        if(buyState.equals("bid")){
+            btnAction.text= "입찰"
+        }else{
             money.visibility = View.INVISIBLE
-            btnAction.text = "구매"
+            btnAction.text= "구매"
         }
 
 

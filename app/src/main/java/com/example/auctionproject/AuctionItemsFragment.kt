@@ -1,12 +1,10 @@
 package com.example.auctionproject
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -41,21 +39,13 @@ class AuctionItemsFragment : Fragment() {
         recyclerView.layoutManager = GridLayoutManager(view.context, 2)
         getProdList()
 
-        val btnRegist = view.findViewById<Button>(R.id.btnRegist)
-
-        // 상품 등록 버튼 클릭했을 때
-        btnRegist.setOnClickListener {
-            val intent = Intent(view.context, RegActivity::class.java)
-            startActivity(intent)
-        }
-
         return view
     }
 
     private fun getProdList() {
         val request = object : StringRequest(
             Request.Method.POST,
-            "http://192.168.219.53:8089/auction/products/prodCheck",
+            "${NetworkUtils.getBaseUrl()}/auction/products/prodCheck",
             Response.Listener { response ->
                 Log.d("response", response)
 

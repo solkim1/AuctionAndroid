@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.appcompat.widget.Toolbar
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -111,7 +112,7 @@ class ItemDetail : AppCompatActivity() {
         val url = "http://192.168.219.53:8089/auction/products/prodDetail"
         val request = object : StringRequest(
             Request.Method.POST,
-            url,
+            "${NetworkUtils.getBaseUrl()}/auction/products/prodDetail",
             { response ->
                 // 응답을 UTF-8로 변환
                 val utf8Response = String(

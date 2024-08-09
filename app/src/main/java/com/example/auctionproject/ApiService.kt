@@ -24,7 +24,7 @@ interface ApiService {
                 .build()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl("http://192.168.219.53:8089/")
+                .baseUrl("${NetworkUtils.getBaseUrl()}/")
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .build()
 

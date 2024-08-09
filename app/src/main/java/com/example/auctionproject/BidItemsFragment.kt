@@ -57,13 +57,13 @@ class BidItemsFragment : Fragment() {
         val token = sharedPreferences?.getString("auth_token", null)
 
         if (userId != null && token != null) {
-            val url = "http://192.168.219.53:8089/auction/products/userBidItems"
+            val url = "${NetworkUtils.getBaseUrl()}/auction/products/userBidItems"
             val jsonObject = JSONObject()
             jsonObject.put("userId", userId)
 
-            Log.d("BidItemsFragment", "Sending request to $url")
-            Log.d("BidItemsFragment", "Request body: ${jsonObject.toString()}")
-            Log.d("BidItemsFragment", "Token: $token")
+            Log.d("request", "Sending request to $url")
+            Log.d("body", "Request body: ${jsonObject.toString()}")
+            Log.d("Token", "Token: $token")
 
             val request = object : StringRequest(
                 Method.POST, url,

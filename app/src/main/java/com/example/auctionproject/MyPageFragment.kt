@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
@@ -26,6 +27,8 @@ class MyPageFragment : Fragment() {
     private lateinit var btnLogOut: Button
     private lateinit var btnUpdProf: Button
     private lateinit var btnSupport: Button
+    private lateinit var btnShowProfile: Button
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_my_page, container, false)
@@ -36,12 +39,18 @@ class MyPageFragment : Fragment() {
         btnLogOut = view.findViewById(R.id.btnLogOut)
         btnUpdProf = view.findViewById(R.id.btnUpdProf)
         btnSupport = view.findViewById(R.id.btnSupport)
+        btnShowProfile = view.findViewById(R.id.btnShowProfile)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fetchUserProfile()
+
+        // SharedViewModel을 사용하여 likeCount 데이터를 관찰하고 UI에 반영
+        sharedViewModel.likeCount.observe(viewLifecycleOwner) { count ->
+            tvLikeCnt.text = count.toString()
+        }
 
         btnQuit.setOnClickListener {
             confirmDeleteUserAccount()
@@ -60,6 +69,18 @@ class MyPageFragment : Fragment() {
             val intent = Intent(activity, SupportActivity::class.java)
             startActivity(intent)
         }
+
+        btnShowProfile.setOnClickListener {
+            val profileFragment = ProfileFragment()
+            val bundle = Bundle()
+            bundle.putString("nickname", tvNickname.text.toString())
+            profileFragment.arguments = bundle
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment, profileFragment)
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     override fun onResume() {
@@ -71,7 +92,7 @@ class MyPageFragment : Fragment() {
         val sharedPreferences = activity?.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         val token = sharedPreferences?.getString("auth_token", "") ?: ""
 
-        val url = "http://192.168.219.53:8089/auction/profile"
+        val url = "${NetworkUtils.getBaseUrl()}/auction/profile"
 
         val request = object : JsonObjectRequest(
             Request.Method.GET, url, null,
@@ -80,6 +101,9 @@ class MyPageFragment : Fragment() {
                 val user = gson.fromJson(response.toString(), Users::class.java)
                 updateUserUI(user)
                 fetchCommentCount(user.userId)
+
+                // SharedViewModel에 likeCount 업데이트
+                user.likes?.let { sharedViewModel.setLikeCount(it) }
             },
             { error ->
                 Toast.makeText(context, "오류: ${error.message}", Toast.LENGTH_SHORT).show()
@@ -100,7 +124,7 @@ class MyPageFragment : Fragment() {
         val sharedPreferences = activity?.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         val token = sharedPreferences?.getString("auth_token", "") ?: ""
 
-        val url = "http://192.168.219.53:8089/auction/profile/comments/count/$userId"
+        val url = "${NetworkUtils.getBaseUrl()}/auction/profile/comments/count/$userId"
 
         val request = object : StringRequest(
             Request.Method.GET, url,
@@ -149,7 +173,7 @@ class MyPageFragment : Fragment() {
         val token = sharedPreferences?.getString("auth_token", "") ?: ""
         val userId = sharedPreferences?.getString("user_id", "") ?: ""
 
-        val url = "http://192.168.219.53:8089/auction/users/$userId"
+        val url = "${NetworkUtils.getBaseUrl()}/auction/users/$userId"
 
         val request = object : StringRequest(
             Request.Method.DELETE, url,
@@ -201,5 +225,8 @@ class MyPageFragment : Fragment() {
     private fun updateUserUI(user: Users) {
         tvNickname.text = user.nickname
         tvLikeCnt.text = user.likes.toString()
+
+        // SharedViewModel에 likeCount 업데이트
+        user.likes?.let { sharedViewModel.setLikeCount(it) }
     }
 }
