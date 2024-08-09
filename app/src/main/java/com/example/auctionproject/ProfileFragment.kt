@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
@@ -32,6 +33,7 @@ class ProfileFragment : Fragment() {
     private lateinit var queue: RequestQueue
     private lateinit var btnSubmitComment: Button
     private lateinit var etComment: EditText
+    private val sharedViewModel: SharedViewModel by activityViewModels() // SharedViewModel 사용
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,7 +76,12 @@ class ProfileFragment : Fragment() {
 
         // 좋아요 클릭 이벤트 처리
         tvLikes.setOnClickListener {
-            incrementLikeCount()
+            incrementLikeCountOnServer()
+        }
+
+        // likeCount LiveData 관찰
+        sharedViewModel.likeCount.observe(viewLifecycleOwner) { count ->
+            tvLikeCount.text = count.toString()
         }
 
         btnSubmitComment.setOnClickListener {
@@ -206,7 +213,7 @@ class ProfileFragment : Fragment() {
         queue.add(request)
     }
 
-    private fun incrementLikeCount() {
+    private fun incrementLikeCountOnServer() {
         val sharedPreferences = activity?.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         val token = sharedPreferences?.getString("auth_token", "") ?: ""
         val userId = sharedPreferences?.getString("user_id", "") ?: ""
@@ -220,7 +227,7 @@ class ProfileFragment : Fragment() {
                     Log.d("ProfileFragment", "좋아요 증가 응답: $response")
                     // 좋아요 수 증가 후 업데이트
                     val updatedLikeCount = response.getInt("likes")
-                    tvLikeCount.text = updatedLikeCount.toString()
+                    sharedViewModel.setLikeCount(updatedLikeCount)
                 } catch (e: JSONException) {
                     Toast.makeText(context, "좋아요 수 업데이트 중 오류 발생", Toast.LENGTH_SHORT).show()
                     Log.e("ProfileFragment", "좋아요 수 JSON 파싱 오류", e)

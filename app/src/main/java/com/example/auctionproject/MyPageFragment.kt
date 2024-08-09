@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
@@ -27,6 +28,7 @@ class MyPageFragment : Fragment() {
     private lateinit var btnUpdProf: Button
     private lateinit var btnSupport: Button
     private lateinit var btnShowProfile: Button
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_my_page, container, false)
@@ -44,6 +46,11 @@ class MyPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fetchUserProfile()
+
+        // SharedViewModel을 사용하여 likeCount 데이터를 관찰하고 UI에 반영
+        sharedViewModel.likeCount.observe(viewLifecycleOwner) { count ->
+            tvLikeCnt.text = count.toString()
+        }
 
         btnQuit.setOnClickListener {
             confirmDeleteUserAccount()
@@ -65,6 +72,9 @@ class MyPageFragment : Fragment() {
 
         btnShowProfile.setOnClickListener {
             val profileFragment = ProfileFragment()
+            val bundle = Bundle()
+            bundle.putString("nickname", tvNickname.text.toString())
+            profileFragment.arguments = bundle
 
             parentFragmentManager.beginTransaction()
                 .replace(R.id.nav_host_fragment, profileFragment)
@@ -91,6 +101,9 @@ class MyPageFragment : Fragment() {
                 val user = gson.fromJson(response.toString(), Users::class.java)
                 updateUserUI(user)
                 fetchCommentCount(user.userId)
+
+                // SharedViewModel에 likeCount 업데이트
+                user.likes?.let { sharedViewModel.setLikeCount(it) }
             },
             { error ->
                 Toast.makeText(context, "오류: ${error.message}", Toast.LENGTH_SHORT).show()
@@ -212,5 +225,8 @@ class MyPageFragment : Fragment() {
     private fun updateUserUI(user: Users) {
         tvNickname.text = user.nickname
         tvLikeCnt.text = user.likes.toString()
+
+        // SharedViewModel에 likeCount 업데이트
+        user.likes?.let { sharedViewModel.setLikeCount(it) }
     }
 }

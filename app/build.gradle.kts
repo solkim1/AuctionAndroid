@@ -49,6 +49,7 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.0")
     implementation("androidx.cardview:cardview:1.0.0")
+    implementation ("androidx.fragment:fragment-ktx:1.6.1")
     implementation(libs.androidx.activity)
 
     testImplementation("junit:junit:4.13.2")
