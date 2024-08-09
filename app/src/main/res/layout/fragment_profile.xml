@@ -151,7 +151,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
+        app:layout_constraintGuide_percent="0.27" />
 
     <TextView
         android:id="@+id/tv_likes"
@@ -160,9 +160,10 @@
         android:layout_marginStart="16dp"
         android:text="♥"
         android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tvProfName"
-        app:layout_constraintStart_toEndOf="@+id/tvProfName"
-        app:layout_constraintTop_toTopOf="@+id/tvProfName" />
+        app:layout_constraintBottom_toBottomOf="@+id/tvLikeCount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvLikeCount"
+        app:layout_constraintTop_toTopOf="@+id/tvLikeCount" />
 
     <TextView
         android:id="@+id/tv_user_id"

@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -14,7 +15,7 @@ import org.json.JSONObject
 
 class UpdateProfileActivity : AppCompatActivity() {
 
-    private lateinit var etUpdId:EditText
+    private lateinit var tvUpdId: TextView
     private lateinit var etUpdPassword: EditText
     private lateinit var etUpdNickname: EditText
     private lateinit var btnUpdate: Button
@@ -24,7 +25,7 @@ class UpdateProfileActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_update_profile)
 
-        etUpdId = findViewById(R.id.etUpdId)
+        tvUpdId = findViewById(R.id.etUpdId)
         etUpdPassword = findViewById(R.id.etUpdPassword)
         etUpdNickname = findViewById(R.id.etUpdNickname)
         btnUpdate = findViewById(R.id.btnUpdate)
@@ -35,6 +36,11 @@ class UpdateProfileActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
+
+        val sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        val userId = sharedPreferences.getString("user_id", "")
+        tvUpdId.text = userId
+
         btnUpdate.setOnClickListener {
             updateProfile()
         }
@@ -47,7 +53,7 @@ class UpdateProfileActivity : AppCompatActivity() {
 
         val url = "${NetworkUtils.getBaseUrl()}/auction/users/updateProfile"
         val jsonRequest = JSONObject()
-        jsonRequest.put("newUserId",etUpdId.text.toString())
+        jsonRequest.put("newUserId", userId) // 여기서 ID는 변경하지 않음
         jsonRequest.put("password", etUpdPassword.text.toString())
         jsonRequest.put("nickname", etUpdNickname.text.toString())
 

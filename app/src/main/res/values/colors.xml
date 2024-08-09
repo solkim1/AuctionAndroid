@@ -10,8 +10,9 @@
     <color name="teal_200">#03DAC5</color>
     <color name="teal_700">#018786</color>
     <color name="black">#000000</color>
+    <!--  하단 바 그림색상  -->
     <color name="white">#FFFFFF</color>
-    <color name="colortoolbar">#A22929</color>
+    <!--    즉시입찰 색상-->
     <color name="primaryDarkColor">#FF5722</color>
 
 </resources>
