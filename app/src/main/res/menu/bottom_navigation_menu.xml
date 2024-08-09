@@ -6,7 +6,7 @@
     <item
         android:id="@+id/navigation_bid_items"
         android:icon="@drawable/ic_bid"
-        android:title="낙찰내역"/>
+        android:title="입찰내역" />
     <item
         android:id="@+id/navigation_chat"
         android:icon="@drawable/ic_sale"

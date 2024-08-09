@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -20,7 +20,7 @@ import com.google.gson.reflect.TypeToken
 
 class MyProdFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: ChatAdapter
+    private lateinit var adapter: AuctionItemAdapter
     private lateinit var queue: RequestQueue
     private var prodList: ArrayList<Products> = ArrayList()
 
@@ -32,8 +32,12 @@ class MyProdFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_my_prod, container, false)
 
         recyclerView = view.findViewById(R.id.recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = GridLayoutManager(context,2)
         queue = Volley.newRequestQueue(view.context)
+
+        // 어댑터 초기화
+        adapter = AuctionItemAdapter(requireContext(), prodList)
+        recyclerView.adapter = adapter
 
         val sharedPref = view.context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
         val userId = sharedPref.getString("user_id", null)
@@ -53,7 +57,7 @@ class MyProdFragment : Fragment() {
                 prodList.addAll(products)
 
                 // 어댑터에 데이터 변경 알림
-//                adapter.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()  // 어댑터에 데이터 변경 알림
             },
             Response.ErrorListener { error ->
                 Log.d("Error", error.toString())
@@ -75,5 +79,4 @@ class MyProdFragment : Fragment() {
 
         return view
     }
-
 }

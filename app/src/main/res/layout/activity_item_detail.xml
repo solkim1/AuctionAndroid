@@ -204,17 +204,6 @@
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/timeLeft" />
 
-      <TextView
-          android:id="@+id/mineText"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="내 상품입니다"
-          android:textSize="24sp"
-          android:visibility="invisible"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="@+id/prodInfo" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
   </ScrollView>
 
@@ -255,5 +244,17 @@
         android:padding="12dp"
         android:layout_weight="1" />
   </LinearLayout>
+
+  <TextView
+      android:id="@+id/mineText"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="24dp"
+      android:text="내 상품입니다"
+      android:textSize="24sp"
+      android:visibility="invisible"
+      app:layout_constraintBottom_toBottomOf="@+id/buttonContainer"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

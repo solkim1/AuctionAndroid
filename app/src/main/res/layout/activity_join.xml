@@ -19,7 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="Bid Spot"
-        app:titleTextColor="#F44336"
         app:navigationIcon="?attr/homeAsUpIndicator" />
 
 

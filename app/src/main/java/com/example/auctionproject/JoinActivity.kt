@@ -25,6 +25,13 @@ class JoinActivity : AppCompatActivity() {
 
 
 
+        val toolbar: Toolbar = findViewById(R.id.tbUpdProf)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
         val etId = findViewById<EditText>(R.id.etLoginId)
         val etPw = findViewById<EditText>(R.id.etLoginPw)
         val etNick = findViewById<EditText>(R.id.etNick)
