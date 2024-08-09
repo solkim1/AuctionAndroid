@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
             val jsonObject = JSONObject(json)
 
 
-            val url = "http://192.168.219.237:8089/auction/users/login"
+            val url = "${NetworkUtils.getBaseUrl()}/auction/users/login"
 
 
             val request = object : JsonObjectRequest(
@@ -47,7 +47,6 @@ class LoginActivity : AppCompatActivity() {
                     if (token.isNotEmpty()) {
                         // 현재 회원 정보로 로그인 성공
                         val sharedPref = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
-
                         with(sharedPref.edit()) {
                             putString("user_id", inputId) // 사용자 ID 저장
                             putString("auth_token", token) // JWT 토큰 저장

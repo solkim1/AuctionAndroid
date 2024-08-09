@@ -26,7 +26,7 @@ import java.util.Locale
 class ItemDetail : AppCompatActivity() {
 
     // RequestQueue 선언
-    lateinit var queue: RequestQueue
+    private lateinit var queue: RequestQueue
 
     // UI 요소 선언
     lateinit var prodImg: ImageView
@@ -91,12 +91,10 @@ class ItemDetail : AppCompatActivity() {
 
     // 제품 세부정보 가져오기
     private fun getProdDetail(prodIdx: String?) {
-        val url = "http://192.168.219.237:8089/auction/products/prodDetail"
+
         val request = object : StringRequest(
             Request.Method.POST,
-
-            url,
-
+            "${NetworkUtils.getBaseUrl()}/auction/products/prodDetail",
             { response ->
                 // 응답을 UTF-8로 변환
                 val utf8Response = String(
@@ -113,7 +111,9 @@ class ItemDetail : AppCompatActivity() {
                     if (it.startsWith("http://") || it.startsWith("https://")) {
                         it
                     } else {
-                        "http://192.168.219.237:8089$it"
+
+                        "${NetworkUtils.getBaseUrl()}$it"
+
                     }
                 }
                 Glide.with(this)

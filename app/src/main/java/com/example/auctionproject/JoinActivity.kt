@@ -32,14 +32,6 @@ class JoinActivity : AppCompatActivity() {
 
         queue = Volley.newRequestQueue(this@JoinActivity)
 
-        val toolbar: Toolbar = findViewById(R.id.tbUpdProf)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-        toolbar.setNavigationOnClickListener {
-            onBackPressed()
-        }
-
         btnJoinAct.setOnClickListener {
             val inputId = etId.text.toString()
             val inputPw = etPw.text.toString()
@@ -54,7 +46,7 @@ class JoinActivity : AppCompatActivity() {
             val joinRequest = object : StringRequest(
                 Request.Method.POST,
 
-                "http://192.168.219.237:8089/auction/users/join",
+                "${NetworkUtils.getBaseUrl()}/auction/users/join",
 
                 { response ->
                     Log.d("response", response.toString())
@@ -85,7 +77,9 @@ class JoinActivity : AppCompatActivity() {
         val loginRequest = object : StringRequest(
             Request.Method.POST,
 
-            "http://192.168.219.237:8089/auction/users/login",
+
+            "http://${NetworkUtils.getBaseUrl()}/auction/users/login",
+
 
             { response ->
                 Log.d("login response", response)

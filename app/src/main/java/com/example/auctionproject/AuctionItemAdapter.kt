@@ -13,7 +13,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import java.util.*
+import java.util.Date
 
 class AuctionItemAdapter(private val context: Context, private val items: List<Products>) :
     RecyclerView.Adapter<AuctionItemAdapter.ViewHolder>() {
@@ -40,7 +40,9 @@ class AuctionItemAdapter(private val context: Context, private val items: List<P
             if (it.startsWith("http://") || it.startsWith("https://")) {
                 it
             } else {
-                "http://192.168.219.237$it"
+
+                "${NetworkUtils.getBaseUrl()}$it"
+
             }
         }
 

@@ -14,6 +14,7 @@ import org.json.JSONObject
 
 class UpdateProfileActivity : AppCompatActivity() {
 
+    private lateinit var etUpdId:EditText
     private lateinit var etUpdPassword: EditText
     private lateinit var etUpdNickname: EditText
     private lateinit var btnUpdate: Button
@@ -23,6 +24,7 @@ class UpdateProfileActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_update_profile)
 
+        etUpdId = findViewById(R.id.etUpdId)
         etUpdPassword = findViewById(R.id.etUpdPassword)
         etUpdNickname = findViewById(R.id.etUpdNickname)
         btnUpdate = findViewById(R.id.btnUpdate)
@@ -44,10 +46,10 @@ class UpdateProfileActivity : AppCompatActivity() {
         val userId = sharedPreferences?.getString("user_id", "") ?: ""
 
 
-        val url = "http://192.168.219.237:8089/auction/users/updateProfile"
+        val url = "${NetworkUtils.getBaseUrl()}/auction/users/updateProfile"
 
         val jsonRequest = JSONObject()
-        jsonRequest.put("newUserId", userId)
+        jsonRequest.put("newUserId",etUpdId.text.toString())
         jsonRequest.put("password", etUpdPassword.text.toString())
         jsonRequest.put("nickname", etUpdNickname.text.toString())
 

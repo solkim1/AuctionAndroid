@@ -26,6 +26,7 @@ class MyPageFragment : Fragment() {
     private lateinit var btnLogOut: Button
     private lateinit var btnUpdProf: Button
     private lateinit var btnSupport: Button
+    private lateinit var btnShowProfile: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_my_page, container, false)
@@ -36,6 +37,7 @@ class MyPageFragment : Fragment() {
         btnLogOut = view.findViewById(R.id.btnLogOut)
         btnUpdProf = view.findViewById(R.id.btnUpdProf)
         btnSupport = view.findViewById(R.id.btnSupport)
+        btnShowProfile = view.findViewById(R.id.btnShowProfile)
         return view
     }
 
@@ -60,6 +62,15 @@ class MyPageFragment : Fragment() {
             val intent = Intent(activity, SupportActivity::class.java)
             startActivity(intent)
         }
+
+        btnShowProfile.setOnClickListener {
+            val profileFragment = ProfileFragment()
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment, profileFragment)
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     override fun onResume() {
@@ -72,7 +83,7 @@ class MyPageFragment : Fragment() {
         val token = sharedPreferences?.getString("auth_token", "") ?: ""
 
 
-        val url = "http://192.168.219.237:8089/auction/profile"
+        val url = "${NetworkUtils.getBaseUrl()}/auction/profile"
 
 
         val request = object : JsonObjectRequest(
@@ -103,7 +114,7 @@ class MyPageFragment : Fragment() {
         val token = sharedPreferences?.getString("auth_token", "") ?: ""
 
 
-        val url = "http://192.168.219.237:8089/auction/profile/comments/count/$userId"
+        val url = "${NetworkUtils.getBaseUrl()}/auction/profile/comments/count/$userId"
 
 
         val request = object : StringRequest(
@@ -154,7 +165,7 @@ class MyPageFragment : Fragment() {
         val userId = sharedPreferences?.getString("user_id", "") ?: ""
 
 
-        val url = "http://192.168.219.237:8089/auction/users/$userId"
+        val url = "${NetworkUtils.getBaseUrl()}/auction/users/$userId"
 
 
         val request = object : StringRequest(
